@@ -1,0 +1,66 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local TextLabel = Instance.new("TextLabel")
+
+--Properties:
+
+ScreenGui.Parent = game.CoreGui
+
+TextLabel.Parent = ScreenGui
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(0.922600627, 0, -0.0257668365, 0)
+TextLabel.Size = UDim2.new(0, 60, 0, 20)
+TextLabel.Font = Enum.Font.SourceSans
+TextLabel.Text = " "
+TextLabel.TextColor3 = Color3.fromRGB(15, 200, 62)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 41.000
+TextLabel.TextStrokeTransparency = 0.000
+TextLabel.TextWrapped = true
+
+-- Scripts:
+
+local function XSBDN_fake_script() -- TextLabel.LocalScript 
+	local script = Instance.new('LocalScript', TextLabel)
+
+	local t = tick()
+	
+	local count = 0
+	
+	local fps = 60
+	
+	game:GetService("RunService").RenderStepped:Connect(function()
+		count = count + 1
+		if tick()-t >= 1 then
+			fps = count
+			count = 0
+			t = tick()
+			if fps >= 50 then
+				script.Parent.TextColor3 = Color3.fromRGB(0, 255, 0)
+			end
+			if fps < 50 then
+				script.Parent.TextColor3 = Color3.fromRGB(255, 173, 51)
+			end
+			if fps < 30 then
+				script.Parent.TextColor3 = Color3.fromRGB(255, 0, 0)
+			end
+			script.Parent.Text = " "..fps
+		end
+	end)
+end
+coroutine.wrap(XSBDN_fake_script)()
+local function ZYMCH_fake_script() -- ScreenGui.LocalScript 
+	local script = Instance.new('LocalScript', ScreenGui)
+
+	frame = script.Parent.TextLabel
+	frame.Draggable = true
+	frame.Selectable = true
+	frame.Active = true
+end
+coroutine.wrap(ZYMCH_fake_script)()
